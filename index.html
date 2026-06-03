@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Visa Check · TravelSmart®</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;0,900;1,300;1,700&family=Outfit:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink: #0d0d12;
+  --ink2: #1c1c26;
+  --teal: #0d9488;
+  --teal-light: #14b8a6;
+  --teal-glow: rgba(13,148,136,.15);
+  --teal-pale: #f0fdfa;
+  --sky: #e0f7f5;
+  --border: #e2e8f0;
+  --muted: #64748b;
+  --white: #ffffff;
+  --surface: #f8fafc;
+  --free: #059669;
+  --free-bg: #ecfdf5;
+  --visa: #d97706;
+  --visa-bg: #fffbeb;
+  --evisa: #2563eb;
+  --evisa-bg: #eff6ff;
+  --denied: #dc2626;
+  --denied-bg: #fef2f2;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--surface);
+  color: var(--ink);
+  font-family: 'Outfit', sans-serif;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.header {
+  background: var(--ink);
+  padding: 1.2rem 5vw;
+  display: flex; justify-content: space-between; align-items: center;
+  position: sticky; top: 0; z-index: 200;
+}
+.logo {
+  font-family: 'Fraunces', serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--white); letter-spacing: -.02em;
+}
+.logo span { color: var(--teal-light); }
+.header-pill {
+  font-family: 'DM Mono', monospace; font-size: .65rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--teal-light); background: rgba(20,184,166,.1);
+  border: 1px solid rgba(20,184,166,.25); padding: .3rem .8rem;
+  border-radius: 20px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: var(--ink);
+  padding: 5rem 5vw 3.5rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+.hero-glow {
+  position: absolute; top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 700px; height: 400px;
+  background: radial-gradient(ellipse, rgba(13,148,136,.25) 0%, transparent 65%);
+  pointer-events: none;
+}
+.hero-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(20,184,166,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(20,184,166,.04) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+}
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace; font-size: .7rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: var(--teal-light); background: rgba(20,184,166,.1);
+  border: 1px solid rgba(20,184,166,.2);
+  padding: .4rem 1.2rem; border-radius: 20px;
+  display: inline-block; margin-bottom: 2rem;
+  position: relative; z-index: 1;
+  animation: fadeUp .6s ease both;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 900; line-height: .95;
+  color: var(--white); letter-spacing: -.03em;
+  max-width: 12ch; margin: 0 auto 1.5rem;
+  position: relative; z-index: 1;
+  animation: fadeUp .6s ease .1s both;
+}
+.hero h1 em { color: var(--teal-light); font-style: italic; font-weight: 300; }
+.hero-sub {
+  font-size: 1rem; color: rgba(255,255,255,.55);
+  max-width: 44ch; margin: 0 auto 3rem;
+  line-height: 1.7; font-weight: 300;
+  position: relative; z-index: 1;
+  animation: fadeUp .6s ease .2s both;
+}
+
+/* ── SEARCH BOX ── */
+.search-box {
+  background: var(--white);
+  border-radius: 16px; padding: 2rem 2.5rem;
+  max-width: 700px; margin: 0 auto;
+  box-shadow: 0 25px 80px rgba(0,0,0,.4);
+  position: relative; z-index: 1;
+  animation: fadeUp .6s ease .3s both;
+}
+.search-row {
+  display: grid; grid-template-columns: 1fr auto 1fr;
+  gap: 1rem; align-items: end;
+}
+.field { display: flex; flex-direction: column; gap: .5rem; }
+.field label {
+  font-family: 'DM Mono', monospace; font-size: .65rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted);
+}
+.field select, .field input {
+  width: 100%; padding: .85rem 1rem;
+  border: 2px solid var(--border); border-radius: 8px;
+  font-family: 'Outfit', sans-serif; font-size: .95rem;
+  color: var(--ink); background: var(--surface);
+  transition: border-color .2s, box-shadow .2s;
+  appearance: none; cursor: pointer;
+}
+.field select:focus, .field input:focus {
+  outline: none; border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-glow);
+}
+.arrow-icon {
+  font-size: 1.5rem; color: var(--teal);
+  display: flex; align-items: center; justify-content: center;
+  padding-bottom: .5rem;
+}
+.btn-check {
+  width: 100%; margin-top: 1.2rem;
+  background: var(--teal); color: var(--white);
+  font-family: 'Outfit', sans-serif; font-weight: 700;
+  font-size: 1rem; padding: 1rem;
+  border: none; border-radius: 8px; cursor: pointer;
+  transition: all .2s; letter-spacing: -.01em;
+  display: flex; align-items: center; justify-content: center; gap: .6rem;
+}
+.btn-check:hover {
+  background: var(--teal-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(13,148,136,.35);
+}
+
+/* ── STATS BAR ── */
+.stats-bar {
+  background: var(--ink2); padding: 1rem 5vw;
+  display: flex; justify-content: center; gap: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.sbar-item {
+  display: flex; align-items: center; gap: .6rem;
+  font-size: .8rem; color: rgba(255,255,255,.5);
+}
+.sbar-num {
+  font-family: 'Fraunces', serif; font-size: 1.1rem;
+  font-weight: 700; color: var(--teal-light);
+}
+
+/* ── MAIN CONTENT ── */
+.main { max-width: 900px; margin: 0 auto; padding: 3rem 5vw 6rem; }
+
+/* ── LOADING ── */
+.loading {
+  text-align: center; padding: 4rem 0;
+  display: none;
+}
+.loading.active { display: block; }
+.loader {
+  width: 48px; height: 48px; border-radius: 50%;
+  border: 3px solid var(--border);
+  border-top-color: var(--teal);
+  margin: 0 auto 1.5rem;
+  animation: spin .8s linear infinite;
+}
+.loading p { color: var(--muted); font-size: .9rem; }
+
+/* ── RESULT ── */
+.result { display: none; animation: slideIn .4s ease both; }
+.result.active { display: block; }
+
+.result-hero {
+  border-radius: 16px; overflow: hidden;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 30px rgba(0,0,0,.08);
+}
+.result-banner {
+  padding: 2.5rem 3rem;
+  display: flex; align-items: center; gap: 2rem;
+  flex-wrap: wrap;
+}
+.result-banner.free    { background: linear-gradient(135deg, #065f46, #059669); color: white; }
+.result-banner.evisa   { background: linear-gradient(135deg, #1e3a8a, #2563eb); color: white; }
+.result-banner.visa    { background: linear-gradient(135deg, #78350f, #d97706); color: white; }
+.result-banner.denied  { background: linear-gradient(135deg, #7f1d1d, #dc2626); color: white; }
+
+.result-icon { font-size: 3.5rem; flex-shrink: 0; }
+.result-main { flex: 1; }
+.result-verdict {
+  font-family: 'DM Mono', monospace; font-size: .68rem;
+  letter-spacing: .2em; text-transform: uppercase;
+  opacity: .75; margin-bottom: .4rem; display: block;
+}
+.result-main h2 {
+  font-family: 'Fraunces', serif; font-size: 2rem;
+  font-weight: 700; line-height: 1.1; margin-bottom: .5rem;
+}
+.result-main p { font-size: .9rem; opacity: .8; font-weight: 300; line-height: 1.6; }
+.result-meta {
+  display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1.2rem;
+}
+.meta-pill {
+  background: rgba(255,255,255,.15);
+  padding: .4rem 1rem; border-radius: 20px;
+  font-size: .8rem; font-weight: 500;
+  display: flex; align-items: center; gap: .4rem;
+}
+
+/* ── DETAIL CARDS ── */
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-bottom: 2rem; }
+.detail-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 1.5rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.detail-card h4 {
+  font-family: 'DM Mono', monospace; font-size: .65rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted); margin-bottom: 1rem;
+}
+.detail-list { display: grid; gap: .6rem; }
+.detail-item {
+  display: flex; align-items: flex-start; gap: .7rem;
+  font-size: .88rem; line-height: 1.5;
+}
+.detail-dot { color: var(--teal); font-size: .7rem; margin-top: .2rem; flex-shrink: 0; }
+.detail-item strong { color: var(--ink); font-weight: 600; }
+
+/* ── DOCS REQUIRED ── */
+.docs-card {
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 12px; padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 12px rgba(0,0,0,.04);
+}
+.docs-card h3 {
+  font-family: 'Fraunces', serif; font-size: 1.15rem;
+  margin-bottom: 1.5rem; display: flex; align-items: center; gap: .7rem;
+}
+.docs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: .8rem; }
+.doc-item {
+  display: flex; align-items: center; gap: .8rem;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: .9rem 1rem;
+  font-size: .85rem;
+}
+.doc-check {
+  width: 22px; height: 22px; border-radius: 50%;
+  background: var(--teal); color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem; flex-shrink: 0;
+}
+.doc-check.warn { background: var(--visa); }
+
+/* ── TIPS KARMEN ── */
+.tips-card {
+  background: var(--ink); border-radius: 12px;
+  padding: 2rem; margin-bottom: 2rem;
+  position: relative; overflow: hidden;
+}
+.tips-card::before {
+  content: '✦';
+  position: absolute; right: 1.5rem; top: 1rem;
+  font-size: 5rem; opacity: .05; color: var(--teal-light);
+  font-family: serif;
+}
+.tips-card h3 {
+  font-family: 'Fraunces', serif; font-size: 1.1rem;
+  color: var(--white); margin-bottom: 1.2rem;
+  display: flex; align-items: center; gap: .6rem;
+}
+.tip-list { display: grid; gap: .8rem; }
+.tip-row {
+  display: flex; gap: .9rem; align-items: flex-start;
+  padding: .9rem 1rem; background: rgba(255,255,255,.04);
+  border-radius: 8px; border-left: 2px solid var(--teal);
+}
+.tip-row .tip-icon { font-size: 1rem; flex-shrink: 0; margin-top: .05rem; }
+.tip-row p { font-size: .85rem; color: rgba(255,255,255,.75); line-height: 1.6; }
+.tip-row p strong { color: var(--teal-light); }
+
+/* ── CTA UPGRADE ── */
+.cta-upgrade {
+  background: linear-gradient(135deg, var(--teal) 0%, #0f766e 100%);
+  border-radius: 16px; padding: 2.5rem;
+  text-align: center; color: white;
+}
+.cta-upgrade h3 {
+  font-family: 'Fraunces', serif; font-size: 1.6rem;
+  margin-bottom: .6rem;
+}
+.cta-upgrade p { font-size: .9rem; opacity: .8; margin-bottom: 2rem; font-weight: 300; line-height: 1.6; }
+.price-row { margin-bottom: 1.5rem; }
+.price-was { font-family: 'DM Mono', monospace; font-size: .8rem; opacity: .5; text-decoration: line-through; }
+.price-now { font-family: 'Fraunces', serif; font-size: 2.8rem; font-weight: 700; display: block; line-height: 1; }
+.price-desc { font-size: .75rem; opacity: .65; margin-top: .3rem; }
+.btn-get {
+  background: white; color: var(--teal);
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 1rem;
+  padding: 1rem 2.5rem; border: none; border-radius: 8px;
+  cursor: pointer; transition: all .2s;
+  text-decoration: none; display: inline-block; letter-spacing: -.01em;
+}
+.btn-get:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+.cta-guarantee { margin-top: 1rem; font-size: .75rem; opacity: .5; }
+
+/* ── NEW SEARCH ── */
+.btn-new {
+  display: block; margin: 1.5rem auto 0;
+  background: transparent; border: 1px solid var(--border);
+  color: var(--muted); font-family: 'Outfit', sans-serif;
+  font-size: .85rem; padding: .65rem 1.8rem;
+  border-radius: 6px; cursor: pointer;
+  transition: all .2s;
+}
+.btn-new:hover { border-color: var(--teal); color: var(--teal); }
+
+/* ── POPULAR SEARCHES ── */
+.popular { padding: 3rem 5vw; background: var(--white); border-top: 1px solid var(--border); }
+.popular h3 {
+  font-family: 'DM Mono', monospace; font-size: .68rem;
+  letter-spacing: .15em; text-transform: uppercase;
+  color: var(--muted); text-align: center; margin-bottom: 1.5rem;
+}
+.popular-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; max-width: 700px; margin: 0 auto; }
+.pop-btn {
+  background: var(--surface); border: 1px solid var(--border);
+  padding: .5rem 1.1rem; border-radius: 20px;
+  font-size: .82rem; cursor: pointer;
+  transition: all .2s; font-family: 'Outfit', sans-serif;
+  display: flex; align-items: center; gap: .4rem;
+}
+.pop-btn:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-pale); }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 600px) {
+  .search-row { grid-template-columns: 1fr; }
+  .arrow-icon { transform: rotate(90deg); padding: 0; }
+  .detail-grid { grid-template-columns: 1fr; }
+  .result-banner { padding: 1.8rem; }
+  .result-main h2 { font-size: 1.5rem; }
+  .stats-bar { gap: 1.5rem; }
+  .docs-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">Travel<span>Smart</span>®</div>
+  <div class="header-pill">Visa Check Global</div>
+</header>
+
+<!-- HERO + SEARCH -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-eyebrow">🌍 Base de datos global actualizada</div>
+  <h1>¿Necesitas <em>visa</em> para viajar?</h1>
+  <p class="hero-sub">Cubre los destinos más buscados por viajeros hispanohablantes. Para otros destinos consulta siempre la embajada oficial. Ingresa tu nacionalidad y destino — obtén en segundos si necesitas visa, qué documentos llevar y los tips exclusivos de Karmen.</p>
+
+  <div class="search-box">
+    <div class="search-row">
+      <div class="field">
+        <label>🛂 Tu Nacionalidad</label>
+        <select id="selectFrom">
+          <option value="">Selecciona tu país de origen...</option>
+          <optgroup label="— Suramérica —">
+            <option value="CO">🇨🇴 Colombia</option>
+            <option value="VE">🇻🇪 Venezuela</option>
+            <option value="AR">🇦🇷 Argentina</option>
+            <option value="PE">🇵🇪 Perú</option>
+            <option value="CL">🇨🇱 Chile</option>
+            <option value="BR">🇧🇷 Brasil</option>
+            <option value="BO">🇧🇴 Bolivia</option>
+            <option value="EC">🇪🇨 Ecuador</option>
+            <option value="UY">🇺🇾 Uruguay</option>
+            <option value="PY">🇵🇾 Paraguay</option>
+          </optgroup>
+          <optgroup label="— México y Centroamérica —">
+            <option value="MX">🇲🇽 México</option>
+            <option value="GT">🇬🇹 Guatemala</option>
+            <option value="HN">🇭🇳 Honduras</option>
+            <option value="SV">🇸🇻 El Salvador</option>
+            <option value="NI">🇳🇮 Nicaragua</option>
+            <option value="CR">🇨🇷 Costa Rica</option>
+            <option value="PA">🇵🇦 Panamá</option>
+            <option value="BZ">🇧🇿 Belice</option>
+          </optgroup>
+          <optgroup label="— Caribe Hispanohablante —">
+            <option value="CU">🇨🇺 Cuba</option>
+            <option value="DO">🇩🇴 Rep. Dominicana</option>
+          </optgroup>
+        </select>
+      </div>
+      <div class="arrow-icon">→</div>
+      <div class="field">
+        <label>✈️ Destino que quieres visitar</label>
+        <select id="selectTo">
+          <option value="">Selecciona tu destino...</option>
+          <optgroup label="— Europa —">
+            <option value="SCHENGEN">🇪🇺 Europa Schengen (27 países)</option>
+            <option value="UK">🇬🇧 Reino Unido</option>
+          </optgroup>
+          <optgroup label="— Norteamérica —">
+            <option value="US">🇺🇸 Estados Unidos</option>
+            <option value="CA">🇨🇦 Canadá</option>
+            <option value="MX">🇲🇽 México</option>
+          </optgroup>
+          <optgroup label="— Suramérica —">
+            <option value="CO">🇨🇴 Colombia</option>
+            <option value="VE">🇻🇪 Venezuela</option>
+            <option value="AR">🇦🇷 Argentina</option>
+            <option value="PE">🇵🇪 Perú</option>
+            <option value="CL">🇨🇱 Chile</option>
+            <option value="BR">🇧🇷 Brasil</option>
+            <option value="BO">🇧🇴 Bolivia</option>
+            <option value="EC">🇪🇨 Ecuador</option>
+            <option value="UY">🇺🇾 Uruguay</option>
+            <option value="PY">🇵🇾 Paraguay</option>
+          </optgroup>
+          <optgroup label="— Centroamérica —">
+            <option value="GT">🇬🇹 Guatemala</option>
+            <option value="HN">🇭🇳 Honduras</option>
+            <option value="SV">🇸🇻 El Salvador</option>
+            <option value="NI">🇳🇮 Nicaragua</option>
+            <option value="CR">🇨🇷 Costa Rica</option>
+            <option value="PA">🇵🇦 Panamá</option>
+            <option value="BZ">🇧🇿 Belice</option>
+          </optgroup>
+          <optgroup label="— Caribe —">
+            <option value="CU">🇨🇺 Cuba</option>
+            <option value="DO">🇩🇴 Rep. Dominicana</option>
+            <option value="JM">🇯🇲 Jamaica</option>
+            <option value="BB">🇧🇧 Barbados</option>
+            <option value="BS">🇧🇸 Bahamas</option>
+            <option value="AW">🇦🇼 Aruba</option>
+            <option value="CW">🇨🇼 Curazao</option>
+            <option value="HT">🇭🇹 Haití</option>
+          </optgroup>
+          <optgroup label="— Asia y Pacífico —">
+            <option value="JP">🇯🇵 Japón</option>
+            <option value="TH">🇹🇭 Tailandia</option>
+            <option value="ID">🇮🇩 Indonesia (Bali)</option>
+            <option value="IN">🇮🇳 India</option>
+          </optgroup>
+          <optgroup label="— Medio Oriente y África —">
+            <option value="AE">🇦🇪 Emiratos Árabes (Dubai)</option>
+            <option value="TR">🇹🇷 Turquía</option>
+            <option value="EG">🇪🇬 Egipto</option>
+            <option value="MA">🇲🇦 Marruecos</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+    <button class="btn-check" onclick="checkVisa()">
+      <span>🔍</span> Verificar Requisitos de Visa
+    </button>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="sbar-item"><span class="sbar-num">22</span> países de origen</div>
+  <div class="sbar-item"><span class="sbar-num">309+</span> combinaciones verificadas</div>
+  <div class="sbar-item"><span class="sbar-num">2025</span> datos verificados</div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- LOADING -->
+  <div class="loading" id="loading">
+    <div class="loader"></div>
+    <p>Consultando base de datos de visas...</p>
+  </div>
+
+  <!-- RESULT -->
+  <div class="result" id="result"></div>
+
+</div>
+
+<!-- POPULAR SEARCHES -->
+<div class="popular">
+  <h3>Búsquedas Populares</h3>
+  <div class="popular-grid">
+    <button class="pop-btn" onclick="quickSearch('MX','US')">🇲🇽→🇺🇸 México a EEUU</button>
+    <button class="pop-btn" onclick="quickSearch('CO','SCHENGEN')">🇨🇴→🇪🇺 Colombia a Europa</button>
+    <button class="pop-btn" onclick="quickSearch('VE','SCHENGEN')">🇻🇪→🇪🇺 Venezuela a Europa</button>
+    <button class="pop-btn" onclick="quickSearch('AR','SCHENGEN')">🇦🇷→🇪🇺 Argentina a Europa</button>
+    <button class="pop-btn" onclick="quickSearch('VE','MX')">🇻🇪→🇲🇽 Venezuela a México</button>
+    <button class="pop-btn" onclick="quickSearch('CU','MX')">🇨🇺→🇲🇽 Cuba a México</button>
+    <button class="pop-btn" onclick="quickSearch('GT','US')">🇬🇹→🇺🇸 Guatemala a EEUU</button>
+    <button class="pop-btn" onclick="quickSearch('CO','AE')">🇨🇴→🇦🇪 Colombia a Dubai</button>
+    <button class="pop-btn" onclick="quickSearch('PE','MX')">🇵🇪→🇲🇽 Perú a México</button>
+    <button class="pop-btn" onclick="quickSearch('BO','SCHENGEN')">🇧🇴→🇪🇺 Bolivia a Europa</button>
+    <button class="pop-btn" onclick="quickSearch('CO','ES')">🇨🇴→🇪🇸 Colombia a España</button>
+    <button class="pop-btn" onclick="quickSearch('VE','ES')">🇻🇪→🇪🇸 Venezuela a España</button>
+    <button class="pop-btn" onclick="quickSearch('AR','IT')">🇦🇷→🇮🇹 Argentina a Italia</button>
+    <button class="pop-btn" onclick="quickSearch('CO','US')">🇨🇴→🇺🇸 Colombia a EEUU</button>
+    <button class="pop-btn" onclick="quickSearch('MX','ES')">🇲🇽→🇪🇸 México a España</button>
+    <button class="pop-btn" onclick="quickSearch('PE','JP')">🇵🇪→🇯🇵 Perú a Japón</button>
+    <button class="pop-btn" onclick="quickSearch('CO','AE')">🇨🇴→🇦🇪 Colombia a Dubai</button>
+    <button class="pop-btn" onclick="quickSearch('MX','CA')">🇲🇽→🇨🇦 México a Canadá</button>
+    <button class="pop-btn" onclick="quickSearch('VE','CO')">🇻🇪→🇨🇴 Venezuela a Colombia</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════════════════
+// VISA DATABASE
+// ══════════════════════════════════════════════════
+const COUNTRIES = {
+  CO:'Colombia',VE:'Venezuela',AR:'Argentina',PE:'Perú',CL:'Chile',
+  BR:'Brasil',BO:'Bolivia',EC:'Ecuador',UY:'Uruguay',PY:'Paraguay',
+  MX:'México',GT:'Guatemala',HN:'Honduras',SV:'El Salvador',NI:'Nicaragua',
+  CR:'Costa Rica',PA:'Panamá',BZ:'Belice',CU:'Cuba',DO:'Rep. Dominicana',
+  SCHENGEN:'Europa Schengen',UK:'Reino Unido',US:'Estados Unidos',CA:'Canadá',
+  JP:'Japón',TH:'Tailandia',ID:'Indonesia (Bali)',AE:'Emiratos Árabes',
+  TR:'Turquía',EG:'Egipto',MA:'Marruecos',IN:'India',
+  JM:'Jamaica',BB:'Barbados',BS:'Bahamas',AW:'Aruba',CW:'Curazao',HT:'Haití'
+};
+
+const FLAGS = {
+  CO:'🇨🇴',VE:'🇻🇪',AR:'🇦🇷',PE:'🇵🇪',CL:'🇨🇱',BR:'🇧🇷',BO:'🇧🇴',EC:'🇪🇨',
+  UY:'🇺🇾',PY:'🇵🇾',MX:'🇲🇽',GT:'🇬🇹',HN:'🇭🇳',SV:'🇸🇻',NI:'🇳🇮',CR:'🇨🇷',
+  PA:'🇵🇦',BZ:'🇧🇿',CU:'🇨🇺',DO:'🇩🇴',SCHENGEN:'🇪🇺',UK:'🇬🇧',US:'🇺🇸',
+  CA:'🇨🇦',JP:'🇯🇵',TH:'🇹🇭',ID:'🇮🇩',AE:'🇦🇪',TR:'🇹🇷',EG:'🇪🇬',MA:'🇲🇦',
+  IN:'🇮🇳',JM:'🇯🇲',BB:'🇧🇧',BS:'🇧🇸',AW:'🇦🇼',CW:'🇨🇼',HT:'🇭🇹'
+};
+
+// Visa types: 'free' | 'evisa' | 'visa' | 'denied'
+
+
+
+const DB = {
+  'CO-SCHENGEN': { type:'free', verified:'Junio 2025', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026', 've_es_free_3'] },
+  'CO-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1', 'uk_visa_2'] },
+  'CO-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–10 semanas', verified:'Mayo 2025', embassy:null, tips:['co_us_1', 'co_us_2', 'co_us_3'] },
+  'CO-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1', 'co_ca_2'] },
+  'CO-JP': { type:'visa', stay:null, cost:'¥3,000', time:'5–10 días', embassy:null, tips:['jp_visa_latam'] },
+  'CO-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1', 'th_2'] },
+  'CO-ID': { type:'evisa', stay:'30 días', cost:'$35 USD', time:'A la llegada', embassy:null, tips:['id_1'] },
+  'CO-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1', 'ae_2'] },
+  'CO-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'CO-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'Online o a la llegada', embassy:null, tips:['eg_1', 'eg_2'] },
+  'CO-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'CO-IN': { type:'evisa', stay:'60 días', cost:'$25 USD', time:'72 horas', embassy:null, tips:['in_1'] },
+  'CO-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-PY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-CR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-PA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'CO-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CO-SV': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'CO-NI': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'CO-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'CO-CU': { type:'visa', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['cu_dest_1'] },
+  'CO-JM': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'CO-BB': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'CO-BS': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'CO-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card online', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'CO-CW': { type:'free', stay:'30 días', cost:'Gratis + Dicardip online', time:'Dicardip previo obligatorio', embassy:null, tips:['cw_1'] },
+  'CO-HT': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-SCHENGEN': { type:'free', verified:'Junio 2025', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 've_es_free_2', 've_es_free_3', 'etias_2026'] },
+  'VE-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['ve_uk_1'] },
+  'VE-US': { type:'denied', verified:'Junio 2025', stay:null, cost:'N/A', time:'Suspensión activa 2025', embassy:null, tips:['ve_us_new_1', 've_us_new_2'] },
+  'VE-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['ve_restringido_1'] },
+  'VE-MX': { type:'visa', verified:'Marzo 2025', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_mx_1', 've_mx_2'] },
+  'VE-JP': { type:'visa', stay:null, cost:'¥3,000', time:'5–10 días', embassy:null, tips:['ve_restringido_1', 've_jp_1'] },
+  'VE-TH': { type:'evisa', stay:'30 días', cost:'~$55 USD', time:'A la llegada o TVA online', embassy:null, tips:['th_1', 've_th_1'] },
+  'VE-ID': { type:'evisa', stay:'30 días', cost:'$35 USD', time:'A la llegada', embassy:null, tips:['id_1'] },
+  'VE-AE': { type:'visa', stay:null, cost:'$90 USD', time:'3–5 días', embassy:null, tips:['ae_1'] },
+  'VE-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'VE-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'Online o a la llegada', embassy:null, tips:['eg_1', 've_eg_1'] },
+  'VE-MA': { type:'visa', stay:null, cost:'€30–50', time:'2–4 semanas', embassy:null, tips:['ma_1', 've_ma_1'] },
+  'VE-IN': { type:'evisa', stay:'60 días', cost:'$25 USD', time:'72 horas', embassy:null, tips:['in_1'] },
+  'VE-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-CL': { type:'visa', verified:'Enero 2025', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1', 've_cl_1'] },
+  'VE-PE': { type:'visa', verified:'Enero 2025', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1', 've_pe_1'] },
+  'VE-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-PY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-PA': { type:'visa', verified:'Enero 2025', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1', 've_pa_1'] },
+  'VE-DO': { type:'visa', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1'] },
+  'VE-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-JM': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'VE-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'VE-CW': { type:'free', stay:'30 días', cost:'Gratis + Dicardip', time:'Dicardip previo obligatorio', embassy:null, tips:['cw_1'] },
+  'MX-SCHENGEN': { type:'free', verified:'Junio 2025', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'MX-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_mx'] },
+  'MX-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', verified:'Mayo 2025', embassy:null, tips:['mx_us_1', 'mx_us_2', 'mx_us_3'] },
+  'MX-CA': { type:'evisa', stay:'6 meses', cost:'CAD $7', time:'72 horas online', embassy:null, tips:['mx_ca_1', 'mx_ca_2'] },
+  'MX-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1', 'jp_2'] },
+  'MX-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1', 'th_2'] },
+  'MX-ID': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['id_1'] },
+  'MX-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1', 'ae_2'] },
+  'MX-TR': { type:'evisa', stay:'90 días', cost:'$50 USD', time:'Inmediata online', embassy:null, tips:['tr_evisa'] },
+  'MX-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24–48 horas', embassy:null, tips:['eg_1', 'eg_2'] },
+  'MX-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'MX-IN': { type:'evisa', stay:'60 días', cost:'$25 USD', time:'72 horas', embassy:null, tips:['in_1'] },
+  'MX-CO': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-AR': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-PE': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-BR': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-VE': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-CR': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-PA': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'MX-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'MX-SV': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'MX-NI': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte — CA-4', embassy:null, tips:['ca4_note'] },
+  'MX-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'MX-CU': { type:'free', stay:'30 días', cost:'Tarjeta turista ~$25 USD', time:'En el avión o aeropuerto', embassy:null, tips:['cu_mx_1', 'cu_mx_2'] },
+  'MX-JM': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'MX-BB': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'MX-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'AR-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'AR-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'AR-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['ar_us_1', 'latam_us_1'] },
+  'AR-CA': { type:'evisa', stay:'6 meses', cost:'CAD $7', time:'72 horas', embassy:null, tips:['mx_ca_1'] },
+  'AR-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1', 'jp_2'] },
+  'AR-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1'] },
+  'AR-ID': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['id_1'] },
+  'AR-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1', 'ae_2'] },
+  'AR-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'AR-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'AR-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'AR-IN': { type:'evisa', stay:'60 días', cost:'$25 USD', time:'72 horas', embassy:null, tips:['in_1'] },
+  'AR-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-PY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'AR-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'AR-JM': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'AR-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'CL-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'CL-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'CL-US': { type:'evisa', stay:'90 días', cost:'$21 USD', verified:'Junio 2025', time:'Inmediata online', embassy:null, tips:['cl_us_1', 'cl_us_2'] },
+  'CL-CA': { type:'evisa', stay:'6 meses', cost:'CAD $7', time:'72 horas', embassy:null, tips:['mx_ca_1'] },
+  'CL-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1', 'jp_2'] },
+  'CL-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1'] },
+  'CL-ID': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['id_1'] },
+  'CL-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1', 'ae_2'] },
+  'CL-TR': { type:'evisa', stay:'90 días', cost:'$50 USD', time:'Inmediata online', embassy:null, tips:['tr_evisa'] },
+  'CL-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'CL-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'CL-IN': { type:'evisa', stay:'60 días', cost:'$25 USD', time:'72 horas', embassy:null, tips:['in_1'] },
+  'CL-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free', 'cl_mx_1'] },
+  'CL-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-PY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'CL-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-JM': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'CL-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'PE-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'PE-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'PE-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'PE-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'PE-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1', 'jp_2'] },
+  'PE-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1'] },
+  'PE-ID': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['id_1'] },
+  'PE-AE': { type:'evisa', stay:'30 días', cost:'$90 USD', time:'3 días', embassy:null, tips:['ae_1'] },
+  'PE-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'PE-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'PE-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'PE-MX': { type:'visa', verified:'Mayo 2024', stay:null, cost:'Consultar', time:'Desde mayo 2024', embassy:null, tips:['pe_mx_1'] },
+  'PE-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'PE-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-JM': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'PE-AW': { type:'free', stay:'30 días', cost:'Gratis + ED Card', time:'ED Card previa obligatoria', embassy:null, tips:['aw_1'] },
+  'BR-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'BR-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'BR-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'BR-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'BR-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1', 'jp_2'] },
+  'BR-TH': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['th_1'] },
+  'BR-ID': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['id_1'] },
+  'BR-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1'] },
+  'BR-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'BR-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'BR-MA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ma_1'] },
+  'BR-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BR-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'BR-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-SCHENGEN': { type:'visa', verified:'Junio 2025', stay:null, cost:'€80–120', time:'4–8 semanas', embassy:null, tips:['bo_schengen_1', 'bo_schengen_2'] },
+  'BO-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'BO-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'BO-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'BO-MX': { type:'visa', stay:null, cost:'Consultar', time:'Excepción con visa USA/Schengen', embassy:null, tips:['bo_mx_1', 'bo_mx_2'] },
+  'BO-JP': { type:'visa', stay:null, cost:'¥3,000', time:'5–10 días', embassy:null, tips:['jp_visa_latam'] },
+  'BO-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'BO-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'BO-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BO-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'EC-SCHENGEN': { type:'visa', verified:'Junio 2025', stay:null, cost:'€80–120', time:'4–8 semanas', embassy:null, tips:['bo_schengen_1', 'bo_schengen_2'] },
+  'EC-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'EC-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'EC-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'EC-MX': { type:'visa', verified:'Abril 2024', stay:null, cost:'Consultar', time:'Embajada cerrada en Ecuador desde 2024', embassy:null, tips:['ec_mx_1'] },
+  'EC-JP': { type:'visa', stay:null, cost:'¥3,000', time:'5–10 días', embassy:null, tips:['jp_visa_latam'] },
+  'EC-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'EC-EG': { type:'evisa', stay:'30 días', cost:'$25 USD', time:'24 horas', embassy:null, tips:['eg_1'] },
+  'EC-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'UY-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'UY-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'UY-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'UY-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'UY-JP': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['jp_1'] },
+  'UY-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'UY-AE': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['ae_1'] },
+  'PY-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'PY-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'PY-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'PY-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PY-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'CU-SCHENGEN': { type:'visa', verified:'Junio 2025', stay:null, cost:'€80–120', time:'4–8 semanas', embassy:null, tips:['cu_es_visa_1', 'cu_es_visa_2', 'cu_es_visa_3'] },
+  'CU-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'CU-US': { type:'denied', verified:'Junio 2025', stay:null, cost:'N/A', time:'Prohibición activa 2025', embassy:null, tips:['cu_us_1', 'cu_us_2'] },
+  'CU-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'CU-MX': { type:'free', stay:'180 días', cost:'Tarjeta turista ~$25 USD', time:'En el avión o aeropuerto', embassy:null, tips:['cu_mx_1', 'cu_mx_2'] },
+  'CU-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['cu_co_1'] },
+  'CU-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CU-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CU-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CU-TR': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'CU-RU': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'DO-SCHENGEN': { type:'visa', stay:null, cost:'€80–120', time:'4–8 semanas', embassy:null, tips:['bo_schengen_1', 'bo_schengen_2'] },
+  'DO-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'DO-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'DO-CA': { type:'visa', stay:null, cost:'CAD $100', time:'8–12 semanas', embassy:null, tips:['co_ca_1'] },
+  'DO-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'DO-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'DO-TR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['tr_free'] },
+  'DO-JM': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['caribe_free'] },
+  'GT-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'GT-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'GT-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'GT-MX': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'GT-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4 — días compartidos', embassy:null, tips:['ca4_note'] },
+  'GT-SV': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4 — días compartidos', embassy:null, tips:['ca4_note'] },
+  'GT-NI': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4 — días compartidos', embassy:null, tips:['ca4_note'] },
+  'GT-CR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'GT-PA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'GT-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'GT-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'GT-CU': { type:'visa', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['cu_dest_1'] },
+  'HN-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'HN-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['hn_uk_1'] },
+  'HN-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'HN-MX': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'HN-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'HN-SV': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'HN-NI': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'HN-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'HN-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'SV-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'SV-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'SV-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'SV-MX': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'SV-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'SV-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'SV-NI': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'SV-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'SV-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'NI-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'NI-UK': { type:'visa', stay:null, cost:'£115', time:'8–12 semanas', embassy:null, tips:['uk_visa_1'] },
+  'NI-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'NI-MX': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'NI-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'NI-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'NI-SV': { type:'free', stay:'90 días', cost:'Gratis', time:'CA-4', embassy:null, tips:['ca4_note'] },
+  'NI-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CR-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'CR-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'CR-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'CR-MX': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CR-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CR-PA': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CR-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'PA-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
+  'PA-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'PA-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'PA-MX': { type:'free', stay:'180 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PA-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PA-CR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PA-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'BZ-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free'] },
+  'BZ-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
+  'BZ-US': { type:'visa', stay:null, cost:'$185 USD', time:'4–8 semanas', embassy:null, tips:['latam_us_1'] },
+  'BZ-MX': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'BZ-CO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+};
+
+const TIPS_DB = {
+  // ── TIPS DATABASE ──
+  schengen_free: { icon:'🇪🇺', text:'<strong>Zona Schengen — 29 países, 1 solo requisito:</strong> Con este pasaporte puedes entrar libremente a Austria, Bélgica, Chequia, Croacia, Dinamarca, Estonia, Finlandia, Francia, Alemania, Grecia, Hungría, Islandia, Italia, Latvia, Liechtenstein, Lituania, Luxemburgo, Malta, Países Bajos, Noruega, Polonia, Portugal, Eslovaquia, Eslovenia, España, Suecia, Suiza y otros. 90 días en cualquier período de 180.' },
+  etias_2026: { icon:'⏳', text:'<strong>ETIAS desde 2026:</strong> La UE implementará el sistema ETIAS para los países actualmente exentos de visa. Será un registro online previo de €7, válido por 3 años. No es una visa — solo una autorización de viaje.' },
+  latam_free: { icon:'🌎', text:'<strong>Libre tránsito latinoamericano:</strong> La mayoría de países de América Latina tienen acuerdos de libre movilidad entre sí. Solo necesitas pasaporte vigente y puedes viajar sin visa.' },
+  ca4_note: { icon:'🤝', text:'<strong>Acuerdo CA-4:</strong> Guatemala, Honduras, El Salvador y Nicaragua forman una zona de libre tránsito. Los 90 días se cuentan para los 4 países en conjunto — no reinician al cruzar fronteras entre ellos. Para reiniciar, debes salir a un país fuera del CA-4.' },
+  uk_visa_1: { icon:'🇬🇧', text:'<strong>Visa UK requerida:</strong> Tramítala en gov.uk/apply-uk-visa. Costo £115. Proceso online con biométricos presenciales en el VFS más cercano. Tiempo estimado: 8–12 semanas.' },
+  uk_visa_2: { icon:'📋', text:'<strong>Documentos clave para UK:</strong> Pasaporte, fondos económicos (mínimo £100–200/día comprobables), reservas de hotel, boleto de regreso, carta de trabajo o constancia de ingresos y carta explicando el motivo del viaje.' },
+  uk_free_mx: { icon:'🇬🇧', text:'<strong>México entra al Reino Unido sin visa:</strong> Puedes quedarte hasta 6 meses como turista. Solo necesitas pasaporte vigente. No necesitas eVisa ni ningún trámite previo.' },
+  uk_free_ar: { icon:'🇬🇧', text:'<strong>Entrada libre al Reino Unido:</strong> Con este pasaporte puedes entrar sin visa por hasta 6 meses. Solo pasaporte vigente. No confundas con Irlanda del Norte — mismo requisito.' },
+  latam_us_1: { icon:'📋', text:'<strong>Proceso estándar visa americana:</strong> Llena el DS-160 en ceac.state.gov, paga $185 USD, agenda entrevista en el consulado y lleva documentos que demuestren lazos con tu país: empleo, propiedad, familia, cuentas bancarias.' },
+  co_us_1: { icon:'📊', text:'<strong>Entrevista consular para Colombia:</strong> La tasa de aprobación ha mejorado pero sigue siendo exigente. Prepara estados de cuenta (últimos 6 meses), carta de trabajo, propiedad o negocio y prueba de lazos familiares en Colombia.' },
+  co_us_2: { icon:'🔄', text:'<strong>Si te rechazaron antes:</strong> Espera al menos 12 meses y mejora tu situación financiera antes de volver a aplicar. Un rechazo reciente reduce las probabilidades.' },
+  co_us_3: { icon:'💡', text:'<strong>Consulados con menor congestión:</strong> Bogotá tiene tiempos más largos. Considera Barranquilla o Medellín para citas más rápidas.' },
+  co_ca_1: { icon:'📋', text:'<strong>Visa canadiense:</strong> Requiere prueba de empleo o negocio, finanzas estables y lazos en tu país. El proceso puede tomar hasta 12 semanas. Colombia NO califica para eTA.' },
+  co_ca_2: { icon:'💡', text:'<strong>eTA no aplica:</strong> Solo Chile y México entre los latinoamericanos calificarían para eTA en Canadá. El resto necesita visa completa.' },
+  mx_us_1: { icon:'⚠️', text:'<strong>Historial financiero importa:</strong> Demuestra solvencia con estados de cuenta de los últimos 3–6 meses. El mínimo recomendado es $5,000 USD en cuenta.' },
+  mx_us_2: { icon:'📋', text:'<strong>Entrevista en consulado:</strong> Lleva carta de trabajo, escrituras o arrendamiento y comprobantes de lazos familiares en México. El oficial quiere ver razones para regresar.' },
+  mx_us_3: { icon:'💡', text:'<strong>Aplica con tiempo:</strong> Los tiempos de espera se han extendido. Agenda con al menos 3 meses de anticipación.' },
+  mx_ca_1: { icon:'⚡', text:'<strong>eTA para Canadá:</strong> Solo necesitas la Autorización Electrónica de Viaje online — $7 CAD. Se aprueba en minutos. No confundas con la visa de residencia.' },
+  mx_ca_2: { icon:'✅', text:'<strong>Ventaja adicional:</strong> Si ya tienes visa americana vigente, el proceso de eTA es aún más sencillo.' },
+  cl_us_1: { icon:'🇺🇸', text:'<strong>Chile en el Visa Waiver Program:</strong> Solo necesitas el ESTA online ($21) para entrar a EEUU hasta 90 días. Se aprueba en minutos.' },
+  cl_us_2: { icon:'💡', text:'<strong>ESTA vs Visa:</strong> El ESTA no es una visa. Si planeas trabajar, estudiar más de 90 días o si ya te rechazaron antes, necesitas visa B1/B2.' },
+  cl_mx_1: { icon:'🌮', text:'<strong>Chile → México sin visa:</strong> Puedes quedarte hasta 180 días como turista. Solo necesitas pasaporte vigente y llenar la forma migratoria en el avión o aeropuerto.' },
+  ar_us_1: { icon:'📋', text:'<strong>Argentina → EEUU (aún requiere visa):</strong> Aunque Argentina presentó carta de intención para el Visa Waiver Program en julio 2025, el programa aún NO está activo. Sigue necesitando visa B1/B2.' },
+  jp_1: { icon:'🗾', text:'<strong>Japón sin visa:</strong> Llevar itinerario detallado y reservas de hotel para mostrar en migración es altamente recomendado.' },
+  jp_2: { icon:'💴', text:'<strong>Fondos en Japón:</strong> Los oficiales pueden preguntar sobre tus recursos. Lleva tarjeta de crédito y registro de fondos suficientes.' },
+  jp_visa_latam: { icon:'🇯🇵', text:'<strong>Visa para Japón requerida:</strong> Tramítala en la embajada japonesa de tu país. Proceso riguroso: itinerario detallado, reservas, fondos, carta de trabajo o constancia de ingresos. Tiempo: 5–10 días hábiles.' },
+  th_1: { icon:'🌴', text:'<strong>30 días gratis en Tailandia:</strong> Puedes extender otros 30 días pagando ~$60 USD en la oficina de migración o haciendo un border run.' },
+  th_2: { icon:'✈️', text:'<strong>Visa turista (TR):</strong> Si planeas quedarte más de 60 días, tramita la visa TR en el consulado antes de viajar.' },
+  id_1: { icon:'🏝️', text:'<strong>Bali libre de visa:</strong> Indonesia otorga entrada gratis por 30 días. Para quedarte más, obtén el Visa on Arrival ($35 USD) o el B211A para estancias hasta 60 días.' },
+  ae_1: { icon:'🏙️', text:'<strong>Dubai / Abu Dhabi:</strong> Lleva pasaporte con al menos 6 meses de vigencia. Los EAU son uno de los destinos más accesibles del Medio Oriente.' },
+  ae_2: { icon:'🛍️', text:'<strong>Tip de Karmen — Dubai:</strong> Lleva suficiente efectivo o tarjeta con fondos disponibles. Migración puede preguntar sobre tu presupuesto de viaje.' },
+  tr_free: { icon:'🇹🇷', text:'<strong>Turquía sin visa:</strong> Con este pasaporte puedes entrar libremente hasta 90 días. Uno de los mejores destinos costo-beneficio del mundo. No necesitas trámite previo.' },
+  tr_evisa: { icon:'💻', text:'<strong>eVisa Turquía:</strong> Tramita en evisa.gov.tr antes de volar. Proceso toma 5 minutos, se aprueba en horas. $50 USD.' },
+  eg_1: { icon:'🏺', text:'<strong>eVisa Egipto:</strong> Tramítala en visa2egypt.gov.eg antes de viajar. Aprobación en 24–48 horas. También hay Visa on Arrival ($25 USD) en el aeropuerto.' },
+  eg_2: { icon:'🌡️', text:'<strong>Mejor época para visitar:</strong> Octubre–Marzo es la temporada ideal. El verano puede superar los 45°C.' },
+  ma_1: { icon:'🕌', text:'<strong>Marruecos sin visa:</strong> Entrada libre, ideal combinarlo con España. Lleva dírhams marroquíes en efectivo — muchos lugares no aceptan tarjeta.' },
+  in_1: { icon:'🇮🇳', text:'<strong>eVisa India:</strong> Tramítala en indianvisaonline.gov.in. Tres tipos: turismo (60 días), negocios y médica. Aprobación en 72 horas.' },
+  do_1: { icon:'🌴', text:'<strong>Rep. Dominicana — E-Ticket:</strong> Aunque no necesitas visa, debes completar el E-Ticket digital antes de llegar en eticket.migracion.gob.do. Es gratuito y obligatorio.' },
+  cu_dest_1: { icon:'🇨🇺', text:'<strong>Cuba como destino — requiere visa:</strong> La mayoría de latinoamericanos necesitan tramitar tarjeta de turista o visa de Cuba. Consulta el consulado cubano más cercano.' },
+  cu_es_visa_1: { icon:'🛂', text:'<strong>Cuba necesita visa Schengen:</strong> Los cubanos deben tramitar la visa en el consulado del país Schengen que visiten primero. Costo €80–120, proceso 4–8 semanas.' },
+  cu_es_visa_2: { icon:'📋', text:'<strong>Documentos Schengen para cubanos:</strong> Pasaporte vigente, formulario oficial, fotografías, seguro médico (mínimo €30,000), reservas de hotel, boleto de regreso y prueba de fondos.' },
+  cu_es_visa_3: { icon:'💡', text:'<strong>Ciudadanía española por ascendencia:</strong> Muchos cubanos tienen derecho a ciudadanía española bajo la Ley de Memoria Democrática, lo que eliminaría la necesidad de visa.' },
+  cu_mx_1: { icon:'✅', text:'<strong>Cuba → México sin visa:</strong> Debes comprar la Tarjeta de Visitante Turista (FMT) por ~$25 USD en el avión o al llegar al aeropuerto.' },
+  cu_mx_2: { icon:'⚠️', text:'<strong>Importante para cubanos en México:</strong> Las tarjetas bancarias emitidas en Cuba no funcionan en México. Lleva efectivo suficiente.' },
+  cu_co_1: { icon:'✅', text:'<strong>Cuba → Colombia libre:</strong> Entrada sin visa 90 días. Al llegar pueden preguntar sobre fondos y alojamiento. Lleva reservas y mínimo $50 USD/día comprobables.' },
+  cu_us_1: { icon:'⛔', text:'<strong>Prohibición activa desde junio 2025:</strong> Orden ejecutiva suspende la entrada de cubanos con visas B1/B2, F, M y J a EEUU. Desde enero 2026 además se requiere fianza de $5,000–$15,000.' },
+  cu_us_2: { icon:'💡', text:'<strong>Visas emitidas antes del 9/06/2025:</strong> Siguen siendo válidas. Para nuevas solicitudes, consulta directamente la Embajada en La Habana.' },
+  ve_es_free_2: { icon:'📋', text:'<strong>Documentos en migración española:</strong> Aunque no necesitas visa, lleva boleto de regreso, reserva de hotel, seguro médico y fondos mínimos de €122,10/día (mínimo €1.098,90 total). Los controles son estrictos para pasaportes venezolanos.' },
+  ve_es_free_3: { icon:'⚠️', text:'<strong>Controles reforzados:</strong> Los agentes de migración españoles aplican controles adicionales a pasaportes venezolanos. Lleva TODOS los documentos de soporte impresos.' },
+  ve_us_new_1: { icon:'⛔', text:'<strong>Suspensión parcial desde junio 2025:</strong> Orden ejecutiva suspende la entrada de venezolanos con visas B1/B2, F, M y J a EEUU. Desde enero 2026 además se requiere fianza de $5,000–$15,000.' },
+  ve_us_new_2: { icon:'💡', text:'<strong>Visas previas al 9/06/2025:</strong> No fueron revocadas automáticamente y siguen válidas. Para nuevas solicitudes, el proceso se realiza en embajadas en Bogotá o Lima.' },
+  ve_mx_1: { icon:'⚠️', text:'<strong>Venezuela sí requiere visa para México:</strong> Tramítala en la Embajada de México. Lleva estados de cuenta, carta de trabajo y reservas de hotel.' },
+  ve_mx_2: { icon:'💡', text:'<strong>Excepción importante:</strong> Si tienes visa vigente de EEUU, Canadá, Schengen o residencia permanente en Chile, Colombia o Perú, puedes entrar a México sin visa adicional.' },
+  ve_restringido_1: { icon:'⚠️', text:'<strong>Situación migratoria Venezuela 2025:</strong> Desde 2017 una creciente lista de países exige visa a venezolanos. Verifica SIEMPRE en la embajada del destino antes de comprar tu tiquete.' },
+  ve_cl_1: { icon:'🇨🇱', text:'<strong>Chile exige visa a venezolanos:</strong> Tramita en el Consulado de Chile. Lleva pasaporte vigente, fondos económicos y reservas.' },
+  ve_pe_1: { icon:'🇵🇪', text:'<strong>Perú exige visa a venezolanos:</strong> Tramítala en el Consulado de Perú. Excepción: residencia permanente en países de la Alianza del Pacífico permite entrada sin visa.' },
+  ve_pa_1: { icon:'🇵🇦', text:'<strong>Panamá — excepción:</strong> Si tienes visa múltiple vigente y previamente utilizada de EEUU, Canadá, UK o Australia, puedes entrar sin visa venezolana adicional.' },
+  ve_jp_1: { icon:'🇯🇵', text:'<strong>Japón exige visa a venezolanos:</strong> Proceso riguroso en el consulado japonés. Requiere itinerario detallado, fondos, reservas y carta de trabajo.' },
+  ve_th_1: { icon:'🌴', text:'<strong>Venezuela → Tailandia (VOA):</strong> Visa on Arrival en el aeropuerto por ~$55 USD por 30 días. También disponible el TVA online para evitar filas.' },
+  ve_eg_1: { icon:'🏺', text:'<strong>Venezuela → Egipto:</strong> Visa on Arrival ($25 USD) o eVisa online en visa2egypt.gov.eg. Ambas dan acceso por 30 días.' },
+  ve_uk_1: { icon:'🇬🇧', text:'<strong>Venezuela → Reino Unido (visa requerida):</strong> UK Standard Visitor Visa. Proceso online en gov.uk. Costo £115, tiempo 8–12 semanas.' },
+  ve_ma_1: { icon:'📋', text:'<strong>Venezuela → Marruecos:</strong> Requiere visa tramitada en la Embajada de Marruecos. Proceso presencial con pasaporte, fotos y fondos económicos.' },
+  pe_mx_1: { icon:'⚠️', text:'<strong>Perú → México (visa desde mayo 2024):</strong> El gobierno de México exige visa a peruanos desde el 6 de mayo de 2024. Tramítala en el consulado mexicano de tu ciudad.' },
+  bo_schengen_1: { icon:'🛂', text:'<strong>Bolivia/Ecuador/Cuba/RD necesitan visa Schengen:</strong> Tramítala en el consulado del país europeo que visites primero. Costo €80–120, proceso 4–8 semanas.' },
+  bo_schengen_2: { icon:'📋', text:'<strong>Documentos visa Schengen:</strong> Pasaporte vigente, formulario oficial, fotos, seguro médico internacional (mínimo €30,000), reservas de hotel, boleto de regreso y estados de cuenta de los últimos 3 meses.' },
+  bo_mx_1: { icon:'⚠️', text:'<strong>Bolivia requiere visa para México:</strong> Tramítala en el consulado mexicano con cita previa.' },
+  bo_mx_2: { icon:'💡', text:'<strong>Excepción Bolivia → México:</strong> Si tienes visa vigente de EEUU, Canadá, Japón, UK o Schengen, puedes entrar a México sin tramitar visa adicional.' },
+  ec_mx_1: { icon:'⚠️', text:'<strong>Ecuador → México (situación especial):</strong> Requiere visa. Complicación adicional: la embajada mexicana en Ecuador cerró indefinidamente en abril 2024. Los ecuatorianos deben tramitar la visa en consulados de países vecinos (Colombia, Perú o Bolivia).' },
+  hn_uk_1: { icon:'🇬🇧', text:'<strong>Honduras → Reino Unido (visa requerida):</strong> Cambio de política migratoria reciente. Honduras ahora requiere visa UK Standard Visitor. Costo £115, proceso 8–12 semanas.' },
+  caribe_free: { icon:'🏖️', text:'<strong>Caribe sin visa:</strong> La mayoría de islas del Caribe permiten entrada libre a latinoamericanos por 30–90 días con solo pasaporte vigente. Verifica el tiempo exacto según tu destino.' },
+  aw_1: { icon:'🌊', text:'<strong>Aruba — ED Card obligatoria:</strong> Aunque la entrada es libre, debes completar la ED Card online ANTES de viajar en edcardaruba.com. También es obligatorio el seguro de viaje.' },
+  cw_1: { icon:'🌊', text:'<strong>Curazao — Dicardip obligatorio:</strong> Debes completar la tarjeta digital Dicardip online antes de tu llegada. Es gratuito y reemplaza la tarjeta física de inmigración.' },
+};
+
+const DOCS = {
+  free: ['Pasaporte vigente (min. 6 meses)', 'Boleto de regreso', 'Reserva de hotel o alojamiento', 'Fondos suficientes (aprox. $50–100/día)', 'Seguro de viaje (recomendado)'],
+  evisa: ['Pasaporte vigente (min. 6 meses)', 'Fotografía digital reciente', 'Correo electrónico válido', 'Tarjeta de crédito/débito internacional', 'Itinerario de viaje', 'Reserva de hotel'],
+  visa: ['Pasaporte vigente (min. 6 meses + páginas en blanco)', 'Formulario de solicitud oficial', 'Fotografías tamaño visa', 'Comprobante de solvencia económica', 'Carta de trabajo o constancia de ingresos', 'Reservas de hotel confirmadas', 'Boleto de avión (ida y vuelta)', 'Seguro médico internacional', 'Carta explicando motivo del viaje'],
+  denied: ['Documentación especial requerida', 'Consultar embajada directamente']
+};
+
+const TYPE_DATA = {
+  free:   { icon:'✅', label:'SIN VISA', cls:'free',   title:'¡Puedes viajar sin visa!', color:'#059669' },
+  evisa:  { icon:'💻', label:'E-VISA ONLINE', cls:'evisa',  title:'Visa electrónica requerida', color:'#2563eb' },
+  visa:   { icon:'🛂', label:'VISA PRESENCIAL', cls:'visa',   title:'Visa en consulado requerida', color:'#d97706' },
+  denied: { icon:'⛔', label:'ACCESO RESTRINGIDO', cls:'denied', title:'Acceso muy restringido', color:'#dc2626' },
+};
+
+// ══════════════════════════════════════════════════
+// LOGIC
+// ══════════════════════════════════════════════════
+function checkVisa() {
+  const from = document.getElementById('selectFrom').value;
+  const to   = document.getElementById('selectTo').value;
+  if (!from || !to) { alert('Por favor selecciona tu nacionalidad y destino.'); return; }
+  if (from === to) { alert('El origen y destino no pueden ser el mismo país.'); return; }
+  doSearch(from, to);
+}
+
+function quickSearch(from, to) {
+  document.getElementById('selectFrom').value = from;
+  document.getElementById('selectTo').value   = to;
+  doSearch(from, to);
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function doSearch(from, to) {
+  const loading = document.getElementById('loading');
+  const result  = document.getElementById('result');
+  result.classList.remove('active');
+  loading.classList.add('active');
+  setTimeout(() => {
+    loading.classList.remove('active');
+    renderResult(from, to);
+    result.classList.add('active');
+    document.querySelector('.main').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 1200);
+}
+
+function renderResult(from, to) {
+  const key  = `${from}-${to}`;
+  const data = DB[key];
+  const fromName = COUNTRIES[from] || from;
+  const toName   = COUNTRIES[to]   || to;
+  const fromFlag = FLAGS[from] || '🏳️';
+  const toFlag   = FLAGS[to]   || '🏳️';
+
+  if (!data) {
+    // Generic fallback based on common patterns
+    renderGeneric(from, to, fromName, toName, fromFlag, toFlag);
+    return;
+  }
+
+  const td = TYPE_DATA[data.type];
+  const docs = DOCS[data.type] || DOCS.free;
+
+  // Build tips
+  const tipKeys = data.tips || [];
+  const tipsHTML = tipKeys.map(k => {
+    const t = TIPS_DB[k];
+    if (!t) return '';
+    return `<div class="tip-row"><div class="tip-icon">${t.icon}</div><p>${t.text}</p></div>`;
+  }).join('');
+
+  // Build docs
+  const docsHTML = docs.map(d => `
+    <div class="doc-item">
+      <div class="doc-check">✓</div>
+      <span>${d}</span>
+    </div>`).join('');
+
+  // Meta pills
+  const metaHTML = [
+    data.stay  ? `<div class="meta-pill">📅 ${data.stay}</div>` : '',
+    data.cost  ? `<div class="meta-pill">💵 ${data.cost}</div>` : '',
+    data.time  ? `<div class="meta-pill">⏱️ ${data.time}</div>` : '',
+  ].join('');
+
+  const subtitleMap = {
+    free:   `Con pasaporte de ${fromName} puedes entrar a ${toName} sin visa ni trámites previos.`,
+    evisa:  `Necesitas tramitar una visa electrónica en línea antes de viajar — es rápido y sencillo.`,
+    visa:   `Debes solicitar visa en el consulado de ${toName} antes de tu viaje. Planifica con tiempo.`,
+    denied: `El acceso desde ${fromName} a ${toName} está muy restringido. Consulta la embajada.`,
+  };
+
+  const embassySearchUrl = `https://www.google.com/search?q=embajada+${toName}+en+${fromName}+visa+requisitos`;
+  const embassyBtn = data.embassy
+    ? `<a href="${data.embassy}" target="_blank" class="meta-pill" style="text-decoration:none;color:inherit">🔗 Sitio oficial</a>`
+    : `<a href="${embassySearchUrl}" target="_blank" class="meta-pill" style="text-decoration:none;color:inherit">🔍 Buscar embajada</a>`;
+
+  // Verification date — Beta shows general date, Pro will show per-combination date
+  const verifiedDate = data.verified || 'Junio 2025';
+  const verifiedBadge = `<div style="display:inline-flex;align-items:center;gap:.4rem;margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.65rem;color:rgba(255,255,255,.5);letter-spacing:.1em;">
+    <span>✓ VERIFICADO</span><span style="color:rgba(255,255,255,.7);font-weight:600;">${verifiedDate}</span>
+    <span style="opacity:.4">·</span><span>Fuente oficial</span>
+  </div>`;
+
+  document.getElementById('result').innerHTML = `
+    <div class="result-hero">
+      <div class="result-banner ${td.cls}">
+        <div class="result-icon">${td.icon}</div>
+        <div class="result-main">
+          <span class="result-verdict">${fromFlag} ${fromName} → ${toFlag} ${toName}</span>
+          <h2>${td.title}</h2>
+          <p>${subtitleMap[data.type]}</p>
+          <div class="result-meta">
+            ${metaHTML}
+            ${embassyBtn}
+          </div>
+          ${verifiedBadge}
+        </div>
+      </div>
+    </div>
+
+    <div class="detail-grid">
+      <div class="detail-card">
+        <h4>📋 Resumen Rápido</h4>
+        <div class="detail-list">
+          <div class="detail-item"><span class="detail-dot">▸</span><span>Tipo: <strong>${td.label}</strong></span></div>
+          ${data.stay  ? `<div class="detail-item"><span class="detail-dot">▸</span><span>Estadía máxima: <strong>${data.stay}</strong></span></div>` : ''}
+          ${data.cost  ? `<div class="detail-item"><span class="detail-dot">▸</span><span>Costo: <strong>${data.cost}</strong></span></div>` : ''}
+          ${data.time  ? `<div class="detail-item"><span class="detail-dot">▸</span><span>Tiempo proceso: <strong>${data.time}</strong></span></div>` : ''}
+        </div>
+      </div>
+      <div class="detail-card">
+        <h4>🌍 Sobre el Destino</h4>
+        <div class="detail-list">
+          <div class="detail-item"><span class="detail-dot">▸</span><span>Destino: <strong>${toFlag} ${toName}</strong></span></div>
+          <div class="detail-item"><span class="detail-dot">▸</span><span>Pasaporte: <strong>${fromFlag} ${fromName}</strong></span></div>
+          <div class="detail-item"><span class="detail-dot">▸</span><span>Vigencia mínima recomendada: <strong>6 meses</strong></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="docs-card">
+      <h3>📁 Documentos que Necesitas</h3>
+      <div class="docs-grid">${docsHTML}</div>
+      ${data.type === 'visa' || data.type === 'denied' ? `
+      <div style="margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--border);display:flex;gap:.8rem;flex-wrap:wrap;">
+        <a href="https://www.google.com/search?q=embajada+${toName}+en+${fromName}+cita+visa" 
+           target="_blank"
+           style="display:inline-flex;align-items:center;gap:.5rem;background:var(--teal);color:white;padding:.7rem 1.2rem;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600;">
+          📅 Agendar cita consular
+        </a>
+        <a href="https://www.google.com/search?q=requisitos+visa+${toName}+para+${fromName}+2025" 
+           target="_blank"
+           style="display:inline-flex;align-items:center;gap:.5rem;background:var(--surface);color:var(--ink);border:1px solid var(--border);padding:.7rem 1.2rem;border-radius:8px;text-decoration:none;font-size:.85rem;font-weight:600;">
+          🔍 Ver requisitos actualizados
+        </a>
+      </div>` : ''}
+    </div>
+
+    ${tipsHTML ? `
+    <div class="tips-card">
+      <h3>✦ Tips Exclusivos de Karmen</h3>
+      <div class="tip-list">${tipsHTML}</div>
+    </div>` : ''}
+
+    <div class="cta-upgrade">
+      <h3>¿Quieres la guía completa de este destino?</h3>
+      <p>Scripts de entrevista, contactos de consulados, checklist detallado por tipo de viaje y todos los trucos que Karmen usa para que sus clientes jamás sean rechazados.</p>
+      <div class="price-row">
+        <div class="price-was">Valor: $47 USD</div>
+        <span class="price-now">$27</span>
+        <div class="price-desc">Pago único · Guía completa TravelSmart®</div>
+      </div>
+      <a href="https://gumroad.com" target="_blank" class="btn-get" id="ctaBtn">Quiero la Guía Completa →</a>
+      <div class="cta-guarantee">🔒 Si no te sirve, te devolvemos el dinero</div>
+    </div>
+    <button class="btn-new" onclick="resetSearch()">↩ Nueva consulta</button>
+  `;
+}
+
+function renderGeneric(from, to, fromName, toName, fromFlag, toFlag) {
+  document.getElementById('result').innerHTML = `
+    <div class="result-hero">
+      <div class="result-banner visa">
+        <div class="result-icon">🔍</div>
+        <div class="result-main">
+          <span class="result-verdict">${fromFlag} ${fromName} → ${toFlag} ${toName}</span>
+          <h2>Verifica directamente con el consulado</h2>
+          <p>No tenemos datos específicos para esta combinación. Te recomendamos consultar la embajada oficial de ${toName} en tu país.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tips-card">
+      <h3>✦ Recomendaciones Generales de Karmen</h3>
+      <div class="tip-list">
+        <div class="tip-row"><div class="tip-icon">📋</div><p>Siempre lleva <strong>pasaporte con mínimo 6 meses de vigencia</strong> y al menos 2 páginas en blanco.</p></div>
+        <div class="tip-row"><div class="tip-icon">💵</div><p>Demuestra <strong>solvencia económica</strong>: estados de cuenta de últimos 3 meses y tarjeta de crédito internacional.</p></div>
+        <div class="tip-row"><div class="tip-icon">🏥</div><p>Contrata <strong>seguro médico internacional</strong> — muchos países lo solicitan y es básico para cualquier viaje.</p></div>
+        <div class="tip-row"><div class="tip-icon">🔗</div><p>Consulta el sitio oficial del <strong>Ministerio de Relaciones Exteriores</strong> de ${toName} o la embajada en tu país para requisitos actualizados.</p></div>
+      </div>
+    </div>
+    <div class="cta-upgrade">
+      <h3>¿Necesitas ayuda personalizada?</h3>
+      <p>La guía completa TravelSmart® tiene información detallada sobre 50+ destinos populares para latinoamericanos.</p>
+      <div class="price-row">
+        <div class="price-was">Valor: $47 USD</div>
+        <span class="price-now">$27</span>
+        <div class="price-desc">Pago único · Guía completa TravelSmart®</div>
+      </div>
+      <a href="https://gumroad.com" target="_blank" class="btn-get">Ver Guía Completa →</a>
+    </div>
+    <button class="btn-new" onclick="resetSearch()">↩ Nueva consulta</button>
+  `;
+}
+
+function resetSearch() {
+  document.getElementById('result').classList.remove('active');
+  document.getElementById('selectFrom').value = '';
+  document.getElementById('selectTo').value   = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
