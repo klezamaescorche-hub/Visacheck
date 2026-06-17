@@ -1190,6 +1190,52 @@ function resetSearch() {
   document.getElementById('selectTo').value   = '';
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
+</script> 
+<!-- 👇 ASISTENTE PREGÚNTALE A KARMEN -->
+<section style="background:#F5F1E8;padding:3rem 5vw;">
+  <div style="max-width:640px;margin:0 auto;background:#fff;border:1px solid #DCCEBB;border-radius:16px;padding:2rem;">
+    <h2 style="font-family:'Playfair Display',serif;color:#3F4D3C;font-size:1.6rem;margin-bottom:.5rem;">Pregúntale a Karmen</h2>
+    <p style="color:#6E7B62;margin-bottom:1.2rem;line-height:1.5;">¿Tu caso no aparece arriba? Cuéntame tu duda de visa o requisitos de entrada y te oriento.</p>
+    <input id="vc-pregunta" type="text" placeholder="Ej: ¿Necesito visa para entrar a Japón con pasaporte chileno?"
+      style="width:100%;padding:12px;border:1px solid #A89B8A;border-radius:8px;font-family:'DM Mono',monospace;font-size:.95rem;" />
+    <button id="vc-enviar"
+      style="margin-top:10px;background:#3F4D3C;color:#F5F1E8;border:none;padding:12px 22px;border-radius:8px;cursor:pointer;font-family:'Outfit',sans-serif;font-size:1rem;">
+      Consultar
+    </button>
+    <div id="vc-respuesta" style="margin-top:1.2rem;color:#3F4D3C;white-space:pre-wrap;line-height:1.6;"></div>
+  </div>
+</section>
+
+<script>
+const WORKER_URL = "https://visacheck.karmenlezama.workers.dev";
+
+const SYSTEM = Eres el asistente de Globenza Visa Check, la voz de Karmen. Respondes dudas de visas, requisitos de entrada y viajes con información clara y honesta. Tu tono es humano, cercano y reflexivo: nada de hype ni promesas. Si no estás seguro de un requisito oficial, lo dices con franqueza y sugieres verificar en la embajada o fuente oficial del país. No inventas requisitos.;
+
+async function consultar() {
+  const input = document.getElementById("vc-pregunta");
+  const salida = document.getElementById("vc-respuesta");
+  if (!input.value.trim()) return;
+  salida.textContent = "Pensando…";
+  try {
+    const resp = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        system: SYSTEM,
+        messages: [{ role: "user", content: input.value }],
+      }),
+    });
+    const data = await resp.json();
+    salida.textContent = (data.content || [])
+      .filter(b => b.type === "text").map(b => b.text).join("\n")
+      || "No pude responder ahora, intenta de nuevo.";
+  } catch (e) {
+    salida.textContent = "Hubo un error de conexión. Intenta de nuevo en un momento.";
+  }
+}
+document.getElementById("vc-enviar").addEventListener("click", consultar);
+document.getElementById("vc-pregunta").addEventListener("keydown", e => { if (e.key === "Enter") consultar(); });
 </script>
+<!-- 👆 FIN ASISTENTE -->
 </body>
 </html>
