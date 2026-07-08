@@ -489,6 +489,10 @@ body {
           <optgroup label="— Asia y Pacífico —">
             <option value="JP">🇯🇵 Japón</option>
             <option value="TH">🇹🇭 Tailandia</option>
+            <option value="KR">🇰🇷 Corea del Sur</option>
+            <option value="CN">🇨🇳 China</option>
+            <option value="VN">🇻🇳 Vietnam</option>
+            <option value="SG">🇸🇬 Singapur</option>
             <option value="ID">🇮🇩 Indonesia (Bali)</option>
             <option value="IN">🇮🇳 India</option>
           </optgroup>
@@ -510,7 +514,7 @@ body {
 <!-- STATS -->
 <div class="stats-bar">
   <div class="sbar-item"><span class="sbar-num">22</span> países de origen</div>
-  <div class="sbar-item"><span class="sbar-num">309+</span> combinaciones verificadas</div>
+  <div class="sbar-item"><span class="sbar-num">400+</span> combinaciones verificadas</div>
   <div class="sbar-item"><span class="sbar-num">2026</span> datos verificados</div>
 </div>
 
@@ -551,6 +555,9 @@ body {
     <button class="pop-btn" onclick="quickSearch('MX','TH')">🇲🇽→🇹🇭 México a Tailandia</button>
     <button class="pop-btn" onclick="quickSearch('MX','CA')">🇲🇽→🇨🇦 México a Canadá</button>
     <button class="pop-btn" onclick="quickSearch('VE','CO')">🇻🇪→🇨🇴 Venezuela a Colombia</button>
+    <button class="pop-btn" onclick="quickSearch('VE','KR')">🇻🇪→🇰🇷 Venezuela a Corea</button>
+    <button class="pop-btn" onclick="quickSearch('CL','CN')">🇨🇱→🇨🇳 Chile a China</button>
+    <button class="pop-btn" onclick="quickSearch('CO','KR')">🇨🇴→🇰🇷 Colombia a Corea</button>
   </div>
 </div>
 
@@ -568,7 +575,8 @@ const COUNTRIES = {
   SCHENGEN:'Europa Schengen',UK:'Reino Unido',US:'Estados Unidos',CA:'Canadá',
   JP:'Japón',TH:'Tailandia',ID:'Indonesia (Bali)',AE:'Emiratos Árabes',
   TR:'Turquía',EG:'Egipto',MA:'Marruecos',IN:'India',
-  JM:'Jamaica',BB:'Barbados',BS:'Bahamas',AW:'Aruba',CW:'Curazao',HT:'Haití'
+  JM:'Jamaica',BB:'Barbados',BS:'Bahamas',AW:'Aruba',CW:'Curazao',HT:'Haití',
+  KR:'Corea del Sur',CN:'China',VN:'Vietnam',SG:'Singapur'
 };
 
 const FLAGS = {
@@ -576,7 +584,8 @@ const FLAGS = {
   UY:'🇺🇾',PY:'🇵🇾',MX:'🇲🇽',GT:'🇬🇹',HN:'🇭🇳',SV:'🇸🇻',NI:'🇳🇮',CR:'🇨🇷',
   PA:'🇵🇦',BZ:'🇧🇿',CU:'🇨🇺',DO:'🇩🇴',SCHENGEN:'🇪🇺',UK:'🇬🇧',US:'🇺🇸',
   CA:'🇨🇦',JP:'🇯🇵',TH:'🇹🇭',ID:'🇮🇩',AE:'🇦🇪',TR:'🇹🇷',EG:'🇪🇬',MA:'🇲🇦',
-  IN:'🇮🇳',JM:'🇯🇲',BB:'🇧🇧',BS:'🇧🇸',AW:'🇦🇼',CW:'🇨🇼',HT:'🇭🇹'
+  IN:'🇮🇳',JM:'🇯🇲',BB:'🇧🇧',BS:'🇧🇸',AW:'🇦🇼',CW:'🇨🇼',HT:'🇭🇹',
+  KR:'🇰🇷',CN:'🇨🇳',VN:'🇻🇳',SG:'🇸🇬'
 };
 
 const DB = {
@@ -915,7 +924,87 @@ const DB = {
   'BZ-CA': { type:'evisa', stay:'6 meses', cost:'CAD $7', time:'72 horas online', embassy:'https://canada.ca', tips:['mx_ca_1'] },
   'BZ-GT': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'BZ-HN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
-  'BZ-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] }
+  'BZ-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
+  'CO-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'VE-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'AR-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'PE-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'CL-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'BR-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'BO-KR': { type:'visa', verified:'Julio 2026', stay:null, cost:'Desde $30 USD', time:'Trámite consular', embassy:null, tips:['kr_visa'] },
+  'EC-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'UY-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'PY-KR': { type:'evisa', verified:'Julio 2026', stay:'30 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'MX-KR': { type:'free', verified:'Julio 2026', stay:'90 días', cost:'Gratis', time:'Pasaporte + e-Arrival Card', embassy:null, tips:['kr_mx_exempt','kr_llegada'] },
+  'GT-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'HN-KR': { type:'evisa', verified:'Julio 2026', stay:'30 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'SV-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'NI-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'CR-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'PA-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'BZ-KR': { type:'unknown', verified:'Julio 2026', stay:'Consultar', cost:'Consultar', time:'Confirmar con embajada de Corea', embassy:null, tips:[] },
+  'CU-KR': { type:'visa', verified:'Julio 2026', stay:null, cost:'Desde $30 USD', time:'Trámite consular', embassy:null, tips:['kr_visa'] },
+  'DO-KR': { type:'evisa', verified:'Julio 2026', stay:'90 días sin visa', cost:'~$8 USD (K-ETA)', time:'K-ETA online · hasta 72 h antes', embassy:null, tips:['kr_keta','kr_llegada'] },
+  'CO-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'VE-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'AR-CN': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Exención de prueba hasta dic 2026', embassy:null, tips:['cn_free_2026'] },
+  'PE-CN': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Exención de prueba hasta dic 2026', embassy:null, tips:['cn_free_2026'] },
+  'CL-CN': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Exención de prueba hasta dic 2026', embassy:null, tips:['cn_free_2026'] },
+  'BR-CN': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Exención de prueba hasta dic 2026', embassy:null, tips:['cn_free_2026'] },
+  'BO-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'EC-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'UY-CN': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Exención de prueba hasta dic 2026', embassy:null, tips:['cn_free_2026'] },
+  'PY-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'MX-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'GT-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'HN-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'SV-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'NI-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'CR-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'PA-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'BZ-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'CU-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'DO-CN': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · semanas', embassy:null, tips:['cn_visa'] },
+  'CO-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'VE-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'AR-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'PE-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'CL-VN': { type:'free', verified:'Julio 2026', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['vn_cl'] },
+  'BR-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'BO-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'EC-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'UY-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'PY-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'MX-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'GT-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'HN-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'SV-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'NI-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'CR-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'PA-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'BZ-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'CU-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'DO-VN': { type:'evisa', verified:'Julio 2026', stay:'90 días', cost:'$25 USD', time:'Online · 3–5 días hábiles', embassy:null, tips:['vn_evisa'] },
+  'CO-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'VE-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'AR-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'PE-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'CL-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'BR-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'BO-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'EC-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'UY-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'PY-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'MX-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'GT-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'HN-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'SV-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'NI-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'CR-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'PA-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'BZ-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'CU-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] },
+  'DO-SG': { type:'free', verified:'Julio 2026', stay:'30 días', cost:'Gratis', time:'Pasaporte + SG Arrival Card', embassy:null, tips:['sg_sgac','sg_normas'] }
 };
 
 const TIPS_DB = {
@@ -923,6 +1012,16 @@ const TIPS_DB = {
   th_cambio_2026: { icon:'⚠️', text:'<strong>La regla cambió en 2026:</strong> Tailandia eliminó la exención de visa que este pasaporte tenía desde 2024. Ahora debes tramitar visa de turista en el consulado antes de viajar (~USD 40, válida 60 días, extensible 30 más dentro de Tailandia).' },
   th_90_bilateral: { icon:'✅', text:'<strong>Acuerdo bilateral vigente:</strong> Este pasaporte mantiene 90 días sin visa por acuerdo directo con Tailandia. Igual pueden pedirte pasaje de salida y prueba de fondos (referencia ~USD 300 por semana), y el pasaporte debe tener 6 meses de vigencia.' },
   th_voa_evisa: { icon:'🛬', text:'<strong>Dos vías de entrada a Tailandia:</strong> Visa a la llegada (VOA) — 15 días, 2.000 THB en efectivo en el aeropuerto, con pasaje de salida y fondos a mano. O e-visa de turista — 60 días, se tramita antes en thaievisa.go.th. Si tu viaje supera 2 semanas, la e-visa es tu opción.' },
+  kr_keta: { icon:'🇰🇷', text:'<strong>K-ETA obligatoria antes de embarcar:</strong> Se tramita únicamente en k-eta.go.kr (~$8 USD), hasta 72 horas antes del vuelo. Válida 2 años y multientrada. Cuidado con webs clones que cobran mucho más por el mismo formulario.' },
+  kr_mx_exempt: { icon:'✅', text:'<strong>México exento de K-ETA hasta el 31 de diciembre de 2026:</strong> No necesitas tramitarla. En su lugar, completa la e-Arrival Card digital dentro de las 72 horas antes de llegar — los formularios de papel ya no se aceptan en los aeropuertos principales.' },
+  kr_llegada: { icon:'🛬', text:'<strong>Al llegar a Corea:</strong> Reconocimiento facial y huellas en migración. Pueden pedir pasaje de salida y solvencia. Seguro médico muy recomendable: la atención hospitalaria en Corea es de las más caras del mundo.' },
+  kr_visa: { icon:'📋', text:'<strong>Este pasaporte no está en la exención de Corea:</strong> Necesitas visa consular previa (desde ~$30 USD entrada única) con formulario, foto, solvencia económica y reservas. Tramítala en la embajada de Corea correspondiente a tu país.' },
+  cn_free_2026: { icon:'🇨🇳', text:'<strong>Exención de prueba hasta el 31 de diciembre de 2026:</strong> 30 días sin visa para turismo, negocios, visitas familiares o tránsito. Si tu viaje es posterior a esa fecha, verifica antes de comprar si la política fue prorrogada — es una medida temporal.' },
+  cn_visa: { icon:'📋', text:'<strong>China exige visa consular a este pasaporte:</strong> Formulario online (COVA), cita presencial con huellas en el centro de visados, itinerario completo y reservas. Los tiempos varían — inicia el trámite con semanas de anticipación.' },
+  vn_evisa: { icon:'🇻🇳', text:'<strong>E-visa de Vietnam para todos:</strong> Se tramita solo en evisa.gov.vn — $25 USD entrada única, hasta 90 días, respuesta en 3–5 días hábiles. Hay páginas clones que cobran el triple por el mismo trámite oficial.' },
+  vn_cl: { icon:'✅', text:'<strong>Chile es el único pasaporte latino exento en Vietnam:</strong> Hasta 90 días sin visa por acuerdo bilateral. Solo necesitas pasaporte con 6 meses de vigencia. Para estadías mayores, la e-visa en evisa.gov.vn.' },
+  sg_sgac: { icon:'🪪', text:'<strong>SG Arrival Card obligatoria:</strong> Se llena gratis online dentro de los 3 días previos a la llegada, solo en el sitio oficial de ICA (eservices.ica.gov.sg). Sin ella no pasas migración — y si una web te cobra por hacerla, es intermediario.' },
+  sg_normas: { icon:'⚠️', text:'<strong>Singapur es estricto y lo cumple:</strong> Vapes prohibidos (multas fuertes y confiscación), chicle restringido, multas por comer o beber en el metro. Pueden pedirte pasaje de salida y solvencia. Las reglas ahí no son decorativas.' },
   th_ec_2026: { icon:'🔍', text:'<strong>Estatus en revisión:</strong> Ecuador entró a la exención de Tailandia en 2024, pero el programa se recortó en 2026 y las fuentes se contradicen. Antes de comprar pasaje, confirma directamente en thaievisa.go.th o con la embajada tailandesa en Lima (concurrente para Ecuador).' },
   schengen_free: { icon:'🇪🇺', text:'<strong>Zona Schengen — 29 países, 1 solo requisito:</strong> Con este pasaporte puedes entrar libremente a Austria, Bélgica, Chequia, Croacia, Dinamarca, Estonia, Finlandia, Francia, Alemania, Grecia, Hungría, Islandia, Italia, Letonia, Liechtenstein, Lituania, Luxemburgo, Malta, Países Bajos, Noruega, Polonia, Portugal, Eslovaquia, Eslovenia, España, Suecia, Suiza y otros. 90 días en cualquier período de 180.' },
   etias_2026: { icon:'⏳', text:'<strong>ETIAS en implementación:</strong> La UE está desplegando el sistema ETIAS para los países exentos de visa: un registro online previo de €7, válido por 3 años. No es una visa — solo una autorización de viaje. Verifica en travel-europe.europa.eu si ya es exigible en tu fecha de viaje.' },
