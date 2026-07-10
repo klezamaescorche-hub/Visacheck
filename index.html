@@ -646,7 +646,7 @@ const DB = {
   'VE-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'VE-PY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'VE-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
-  'VE-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'VE-EC': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar', time:'Trámite consular · requerida desde 2019', embassy:null, tips:['ve_ec_visa'] },
   'VE-PA': { type:'visa', verified:'Enero 2025', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1', 've_pa_1'] },
   'VE-DO': { type:'visa', stay:null, cost:'Consultar', time:'Tramitar en consulado', embassy:null, tips:['ve_restringido_1'] },
   'VE-CU': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
@@ -727,7 +727,7 @@ const DB = {
   'CL-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'CL-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'CL-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
-  'CL-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'CL-VE': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar arancel consular', time:'Consulados de Venezuela en Bolivia, Brasil o Colombia', embassy:null, tips:['ve_dest_reciprocidad','ve_dest_cl_embajada'] },
   'CL-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'CL-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'CL-UY': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
@@ -752,7 +752,7 @@ const DB = {
   'PE-AR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'PE-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'PE-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
-  'PE-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'PE-VE': { type:'visa', verified:'Julio 2026', stay:null, cost:'Consultar arancel consular', time:'Trámite consular · reciprocidad desde 2019', embassy:null, tips:['ve_dest_reciprocidad'] },
   'PE-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'PE-EC': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'PE-DO': { type:'free', stay:'30 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['do_1'] },
@@ -810,7 +810,7 @@ const DB = {
   'EC-CL': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'EC-PE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'EC-BR': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
-  'EC-VE': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
+  'EC-VE': { type:'unknown', verified:'Julio 2026', stay:'Consultar', cost:'Consultar', time:'Confirmar con consulado de Venezuela', embassy:null, tips:['ve_dest_reciprocidad'] },
   'EC-BO': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['latam_free'] },
   'UY-SCHENGEN': { type:'free', stay:'90 días', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['schengen_free', 'etias_2026'] },
   'UY-UK': { type:'free', stay:'6 meses', cost:'Gratis', time:'Solo pasaporte', embassy:null, tips:['uk_free_ar'] },
@@ -1008,6 +1008,9 @@ const DB = {
 };
 
 const TIPS_DB = {
+  ve_dest_reciprocidad: { icon:'🔁', text:'<strong>Venezuela aplica reciprocidad:</strong> Los países que impusieron visa a los venezolanos ahora también la necesitan para entrar a Venezuela (Perú y Chile desde 2019). El trámite es consular previo, con solvencia, reservas, certificado médico y antecedentes.' },
+  ve_dest_cl_embajada: { icon:'⚠️', text:'<strong>Sin embajada operativa en Chile:</strong> Con las relaciones suspendidas, los chilenos deben tramitar la visa en los consulados de Venezuela en Bolivia, Brasil o Colombia. Suma ese costo y tiempo a tu planificación.' },
+  ve_ec_visa: { icon:'📋', text:'<strong>Ecuador exige visa a los venezolanos desde agosto de 2019:</strong> La visa de visitante temporal (hasta 90 días) se tramita en los consulados de Ecuador con pasaporte, antecedentes penales apostillados y solvencia. Sin visa no hay ingreso regular.' },
   th_tdac: { icon:'🪪', text:'<strong>TDAC obligatoria para todos:</strong> Con o sin visa, debes llenar la Thailand Digital Arrival Card online dentro de las 72 horas antes de tu vuelo. Es gratuita — si una página te cobra por hacerla, es un intermediario. Oficial: tdac.immigration.go.th' },
   th_cambio_2026: { icon:'⚠️', text:'<strong>La regla cambió en 2026:</strong> Tailandia eliminó la exención de visa que este pasaporte tenía desde 2024. Ahora debes tramitar visa de turista en el consulado antes de viajar (~USD 40, válida 60 días, extensible 30 más dentro de Tailandia).' },
   th_90_bilateral: { icon:'✅', text:'<strong>Acuerdo bilateral vigente:</strong> Este pasaporte mantiene 90 días sin visa por acuerdo directo con Tailandia. Igual pueden pedirte pasaje de salida y prueba de fondos (referencia ~USD 300 por semana), y el pasaporte debe tener 6 meses de vigencia.' },
@@ -1148,7 +1151,22 @@ function checkVisa(){
   const from = document.getElementById('selectFrom').value;
   const to = document.getElementById('selectTo').value;
   if(!from || !to){ alert('Selecciona tu nacionalidad y tu destino.'); return; }
-  if(from === to){ alert('El origen y el destino son el mismo país 😉'); return; }
+  if(from === to){
+    if(from === 'VE'){
+      const loading0 = document.getElementById('loading');
+      const result0 = document.getElementById('result');
+      result0.classList.remove('active');
+      loading0.classList.add('active');
+      setTimeout(function(){
+        loading0.classList.remove('active');
+        renderRegresoVE();
+        result0.classList.add('active');
+        result0.scrollIntoView({ behavior:'smooth', block:'start' });
+      }, 700);
+      return;
+    }
+    alert('El origen y el destino son el mismo país 😉'); return;
+  }
 
   const loading = document.getElementById('loading');
   const result = document.getElementById('result');
@@ -1248,6 +1266,57 @@ function renderResult(from, to){
 
   html += '<button class="btn-new" onclick="newSearch()">← Nueva búsqueda</button>';
 
+  result.innerHTML = html;
+}
+
+function renderRegresoVE(){
+  const result = document.getElementById('result');
+  let html = '';
+  html += '<div class="result-hero"><div class="result-banner evisa">';
+  html += '<div class="result-icon">🏠</div>';
+  html += '<div class="result-main">';
+  html += '<span class="result-verdict">🇻🇪 Regreso a Venezuela · Pasaporte vencido, extraviado o deteriorado</span>';
+  html += '<h2>Volver a casa es posible: el salvoconducto</h2>';
+  html += '<p>Si tu pasaporte venezolano está vencido, robado o dañado y necesitas regresar, existe el Documento de Viaje (salvoconducto): una autorización temporal, de un solo uso, para entrar a Venezuela.</p>';
+  html += '<div class="result-meta">';
+  html += '<span class="meta-pill">🖥️ Trámite 100% digital (portal MPPRE)</span>';
+  html += '<span class="meta-pill">💵 Arancel reportado ~$60</span>';
+  html += '<span class="meta-pill">✓ Verificado Julio 2026</span>';
+  html += '</div></div></div></div>';
+
+  html += '<div class="detail-grid">';
+  html += '<div class="detail-card"><h4>📋 Lo esencial</h4><div class="detail-list">';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Se tramita <strong>online en el portal de la Cancillería (MPPRE)</strong> — las embajadas ya no lo reciben presencial.</span></div>';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Necesitas <strong>boleto aéreo confirmado</strong> con el itinerario completo, incluidas escalas.</span></div>';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Inícialo <strong>~2 semanas antes</strong> del vuelo y regístralo con la aerolínea mínimo 72 h antes.</span></div>';
+  html += '</div></div>';
+  html += '<div class="detail-card"><h4>⚠️ Las letras chicas</h4><div class="detail-list">';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Sirve <strong>solo para ENTRAR</strong> a Venezuela. Para volver a salir, deberás tramitar pasaporte nuevo en SAIME.</span></div>';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Es de <strong>un solo uso</strong> y va atado a tu vuelo: si cambia el itinerario, pierde validez.</span></div>';
+  html += '<div class="detail-item"><span class="detail-dot">▸</span><span>Las reglas para <strong>doble nacionalidad</strong> han cambiado varias veces — confírmalas antes de comprar.</span></div>';
+  html += '</div></div>';
+  html += '</div>';
+
+  html += '<div class="docs-card"><h3>📁 Lo que suele pedirse</h3><div class="docs-grid">';
+  html += '<div class="doc-item"><span class="doc-check">✓</span><span>Copia de la cédula venezolana</span></div>';
+  html += '<div class="doc-item"><span class="doc-check">✓</span><span>Copia del pasaporte (si lo tienes)</span></div>';
+  html += '<div class="doc-item"><span class="doc-check">✓</span><span>Boleto aéreo en PDF con itinerario</span></div>';
+  html += '<div class="doc-item"><span class="doc-check">✓</span><span>Foto fondo blanco (JPG/PNG)</span></div>';
+  html += '<div class="doc-item"><span class="doc-check warn">!</span><span>Denuncia, si fue robo o extravío</span></div>';
+  html += '<div class="doc-item"><span class="doc-check warn">!</span><span>Menores: autorizaciones apostilladas</span></div>';
+  html += '</div></div>';
+
+  html += '<p class="source-note">Este trámite depende de autoridades venezolanas y sus reglas cambian con frecuencia y sin aviso. Verifica siempre en el portal oficial del MPPRE y con tu aerolínea antes de comprar pasajes. Información orientativa, verificada en fuentes públicas.</p>';
+
+  html += '<div class="cta-community">';
+  html += '<span class="cta-eyebrow">Esto es gratis · y así se queda</span>';
+  html += '<h3>Volver a casa también es un viaje.</h3>';
+  html += '<p>Y casi nadie habla de esta parte. En la comunidad de Globenza™ compartimos los cambios de requisitos cuando ocurren — también los del regreso — y respondemos dudas reales, sin humo.</p>';
+  html += '<a class="btn-get" href="' + COMMUNITY_LINK + '" target="_blank" rel="noopener">Unirme a la comunidad en WhatsApp</a>';
+  html += '<p class="cta-note">Sin costo. Sin spam. Te sales cuando quieras.</p>';
+  html += '</div>';
+
+  html += '<button class="btn-new" onclick="newSearch()">← Nueva búsqueda</button>';
   result.innerHTML = html;
 }
 
